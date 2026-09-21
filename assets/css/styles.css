@@ -65,7 +65,9 @@ h3 { font-size: 1.3rem; margin-bottom: .6rem; }
 }
 @keyframes slideDown { from { transform: translateY(-100%); } }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-.brand img { width: 150px; height: 64px; object-fit: contain; }
+.brand { display: flex; align-items: center; align-self: stretch; }
+.brand img { width: 152px; height: 66px; object-fit: contain; object-position: center; }
+.site-header.is-scrolled .brand img { width: 132px; height: 54px; }
 .nav-links { display: flex; align-items: center; gap: 1.4rem; color: #fff; font-size: .9rem; font-weight: 600; }
 .nav-links a:not(.btn):hover { color: var(--lime); }
 
@@ -243,7 +245,7 @@ section { padding: 100px 0; }
 @media (max-width: 620px) {
   .container { width: min(calc(100% - 28px), var(--max)); }
   .site-header { height: 76px; }
-  .brand img { width: 124px; }
+  .brand img, .site-header.is-scrolled .brand img { width: 126px; height: 54px; }
   .nav-links .btn { padding: .65rem .85rem; min-height: 44px; font-size: .8rem; }
   .hero { min-height: 670px; padding: 120px 0 64px; }
   h1 { font-size: clamp(2.55rem, 13vw, 4rem); }
