@@ -102,18 +102,18 @@ h3 { font-size: 1.3rem; margin-bottom: .6rem; }
 .hero .container { position: relative; z-index: 2; }
 .hero-copy { max-width: 880px; }
 .hero:not(.hub-hero) {
-  align-items: center;
-  background: var(--ink);
-  padding-block: 130px 76px;
+  align-items: flex-end;
+  padding: 150px 0 90px;
 }
 .hero:not(.hub-hero)::before {
-  left: 52%;
+  left: 0;
   background:
-    linear-gradient(90deg, rgba(11,12,14,.2), transparent 22%),
-    var(--hero) 68% center / auto 100% no-repeat;
-  transform: none;
+    linear-gradient(90deg, rgba(6,7,9,.96) 0%, rgba(6,7,9,.86) 38%, rgba(6,7,9,.48) 52%, rgba(6,7,9,.06) 68%),
+    linear-gradient(0deg, rgba(6,7,9,.72), transparent 44%),
+    var(--hero) center / cover no-repeat;
+  transform: scale(1.01);
 }
-.hero:not(.hub-hero) .hero-copy { width: 46%; max-width: 540px; }
+.hero:not(.hub-hero) .hero-copy { width: 44%; max-width: 520px; }
 .hero:not(.hub-hero) h1 {
   max-width: none;
   font-size: clamp(2.35rem, 3.6vw, 3.6rem);
