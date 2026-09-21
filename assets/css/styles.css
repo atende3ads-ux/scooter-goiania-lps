@@ -247,7 +247,18 @@ section { padding: 100px 0; }
   .site-header { height: 76px; }
   .brand img, .site-header.is-scrolled .brand img { width: 126px; height: 54px; }
   .nav-links .btn { padding: .65rem .85rem; min-height: 44px; font-size: .8rem; }
-  .hero { min-height: 670px; padding: 120px 0 64px; }
+  .hero { display: block; min-height: 0; padding: 0 0 58px; background: var(--ink); }
+  .hero::before {
+    inset: 0 0 auto;
+    height: 350px;
+    background:
+      linear-gradient(0deg, var(--ink) 0%, rgba(11,12,14,.72) 16%, transparent 48%),
+      var(--hero) 100% center/cover no-repeat;
+    transform: none;
+  }
+  .hero::after { display: none; }
+  .hero .container { padding-top: 370px; }
+  .hero-copy { max-width: none; }
   h1 { font-size: clamp(2.15rem, 10vw, 3.1rem); }
   h2 { font-size: 1.85rem; }
   .hero-actions .btn { width: 100%; }
