@@ -46,8 +46,8 @@ button { cursor: pointer; }
 .eyebrow::before { display: none; }
 .display, h1, h2, h3 { font-family: "Manrope", sans-serif; letter-spacing: -.035em; line-height: 1.08; }
 h1, h2, h3, p { margin-top: 0; }
-h1 { font-size: clamp(2.6rem, 6vw, 5.8rem); max-width: 880px; margin-bottom: 1.35rem; }
-h2 { font-size: clamp(2rem, 4vw, 3.65rem); margin-bottom: 1.15rem; }
+h1 { font-size: clamp(2.3rem, 4.6vw, 4.5rem); max-width: 880px; margin-bottom: 1.35rem; }
+h2 { font-size: clamp(1.8rem, 3vw, 2.85rem); margin-bottom: 1.15rem; }
 h3 { font-size: 1.3rem; margin-bottom: .6rem; }
 .lead { font-size: clamp(1.05rem, 1.6vw, 1.3rem); max-width: 700px; color: rgba(255,255,255,.76); }
 .section-intro { max-width: 720px; margin-bottom: 2.5rem; }
@@ -248,8 +248,8 @@ section { padding: 100px 0; }
   .brand img, .site-header.is-scrolled .brand img { width: 126px; height: 54px; }
   .nav-links .btn { padding: .65rem .85rem; min-height: 44px; font-size: .8rem; }
   .hero { min-height: 670px; padding: 120px 0 64px; }
-  h1 { font-size: clamp(2.55rem, 13vw, 4rem); }
-  h2 { font-size: 2.15rem; }
+  h1 { font-size: clamp(2.15rem, 10vw, 3.1rem); }
+  h2 { font-size: 1.85rem; }
   .hero-actions .btn { width: 100%; }
   .trust-row { grid-template-columns: 1fr 1fr; }
   .trust-item { padding: 1rem .5rem; font-size: .75rem; }
