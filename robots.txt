@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://atende3ads-ux.github.io/scooter-goiania-lps/sitemap.xml
