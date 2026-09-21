@@ -126,7 +126,7 @@ if (floating) floating.innerHTML = iconWhats;
 document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
 
 document.querySelectorAll('[data-animated-heading]').forEach(heading => {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 620px)').matches) return;
   const lines = heading.innerText.split('\n');
   let characterIndex = 0;
   heading.textContent = '';
