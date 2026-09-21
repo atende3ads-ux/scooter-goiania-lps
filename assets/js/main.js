@@ -124,3 +124,24 @@ const floating = document.querySelector('.floating-whatsapp');
 if (floating) floating.innerHTML = iconWhats;
 
 document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
+
+document.querySelectorAll('[data-animated-heading]').forEach(heading => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const lines = heading.innerText.split('\n');
+  let characterIndex = 0;
+  heading.textContent = '';
+  lines.forEach((lineText, lineIndex) => {
+    const line = document.createElement('span');
+    line.className = 'animated-line';
+    [...lineText].forEach(character => {
+      const span = document.createElement('span');
+      span.className = 'animated-char';
+      span.textContent = character === ' ' ? '\u00a0' : character;
+      span.style.setProperty('--char-delay', `${200 + characterIndex * 30}ms`);
+      characterIndex += 1;
+      line.appendChild(span);
+    });
+    heading.appendChild(line);
+    if (lineIndex < lines.length - 1) heading.appendChild(document.createElement('br'));
+  });
+});
