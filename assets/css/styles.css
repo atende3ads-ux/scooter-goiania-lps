@@ -254,7 +254,7 @@ section { padding: 100px 0; }
     height: 350px;
     background:
       linear-gradient(0deg, var(--ink) 0%, rgba(11,12,14,.72) 16%, transparent 48%),
-      var(--hero) 100% center/cover no-repeat;
+      var(--hero-mobile, var(--hero)) center/cover no-repeat;
     transform: none;
   }
   .hero::after { display: none; }
