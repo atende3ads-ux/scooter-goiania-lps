@@ -305,7 +305,8 @@ section { padding: 100px 0; }
 
 .problem-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 .problem-card { display: flex; gap: 1rem; align-items: start; padding: 1.4rem; background: #fff; border: 1px solid var(--line); border-radius: 20px; }
-.problem-card .num { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--lime); font-weight: 800; }
+.problem-icon { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: var(--ink); color: var(--lime); }
+.problem-icon svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 .problem-card p { margin: .25rem 0 0; color: var(--muted); }
 .steps { counter-reset: step; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .step { position: relative; padding: 2rem 1.5rem; background: #fff; border-radius: 22px; border: 1px solid var(--line); }
