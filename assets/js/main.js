@@ -108,19 +108,6 @@ document.querySelectorAll('[data-icon]').forEach(element => {
 
 document.querySelectorAll('[data-carousel]').forEach(wrapper => {
   const track = wrapper.querySelector('.product-carousel');
-  if (!track) return;
-  const updateCarouselFade = () => {
-    const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
-    const hasLeft = track.scrollLeft > 4;
-    const hasRight = track.scrollLeft < maxScroll - 4;
-    track.style.setProperty('--carousel-fade-left', hasLeft ? 'transparent' : '#000');
-    track.style.setProperty('--carousel-fade-left-soft', hasLeft ? 'rgba(0,0,0,.45)' : '#000');
-    track.style.setProperty('--carousel-fade-right', hasRight ? 'transparent' : '#000');
-    track.style.setProperty('--carousel-fade-right-soft', hasRight ? 'rgba(0,0,0,.45)' : '#000');
-  };
-  updateCarouselFade();
-  track.addEventListener('scroll', updateCarouselFade, {passive:true});
-  window.addEventListener('resize', updateCarouselFade, {passive:true});
   wrapper.querySelector('[data-prev]')?.addEventListener('click', () => track.scrollBy({left: -380, behavior: 'smooth'}));
   wrapper.querySelector('[data-next]')?.addEventListener('click', () => track.scrollBy({left: 380, behavior: 'smooth'}));
 });
