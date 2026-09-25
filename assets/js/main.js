@@ -4,7 +4,7 @@
 const CONFIG = {
   // ID do contêiner do Google Tag Manager (ex.: 'GTM-XXXXXXX'). Vazio = GTM desativado.
   // GA4 e Google Ads devem ser configurados dentro do GTM.
-  gtmId: '',
+  gtmId: 'GTM-59HD4DQB',
   // URL do webhook que recebe os cliques no WhatsApp (ex.: n8n, Make, Zapier). Vazio = desativado.
   // O domínio precisa estar liberado no connect-src da CSP (.htaccess).
   webhookUrl: '',
@@ -102,6 +102,59 @@ document.querySelectorAll('[data-animated-heading]').forEach(heading => {
   });
 });
 
+/* ---------- FAQ em sanfona: abre um e fecha os outros, com animação ----------
+   Sem JS, o atributo name="faq" dos <details> já garante um item aberto por vez. */
+document.querySelectorAll('.faq-list').forEach(list => {
+  const items = [...list.querySelectorAll('.faq-item')];
+  const duration = reduceMotion ? 0 : 380;
+  const easing = 'cubic-bezier(.2,.7,.2,1)';
+  // O JS controla a exclusividade; o name nativo fecharia os outros sem animação
+  items.forEach(item => item.removeAttribute('name'));
+
+  const closedHeight = item => item.querySelector('summary').offsetHeight + (item.offsetHeight - item.clientHeight);
+  const run = (item, from, to, done) => {
+    item.animation?.cancel();
+    item.classList.add('is-animating');
+    const animation = item.animate({ height: [`${from}px`, `${to}px`] }, { duration, easing });
+    item.animation = animation;
+    animation.onfinish = () => { item.animation = null; item.classList.remove('is-animating'); done?.(); };
+    animation.oncancel = () => { item.classList.remove('is-animating'); };
+    return animation.finished.catch(() => {});
+  };
+  const close = item => {
+    if (!item.open || item.classList.contains('is-closing')) return Promise.resolve();
+    item.classList.add('is-closing');
+    return run(item, item.offsetHeight, closedHeight(item), () => { item.open = false; item.classList.remove('is-closing'); });
+  };
+  const open = item => {
+    item.classList.remove('is-closing');
+    const from = item.animation ? item.offsetHeight : closedHeight(item);
+    item.animation?.cancel();
+    item.open = true;
+    return run(item, from, item.offsetHeight);
+  };
+
+  items.forEach(item => {
+    const summary = item.querySelector('summary');
+    summary.addEventListener('click', event => {
+      event.preventDefault();
+      if (item.open && !item.classList.contains('is-closing')) { close(item); return; }
+      const others = items.filter(other => other !== item).map(close);
+      open(item);
+      window.dataLayer.push({ event: 'faq_open', faq_question: summary.textContent.trim(), page_path: location.pathname });
+      // Se a pergunta subir para baixo do header ao fechar a anterior, reposiciona a rolagem
+      Promise.all(others).then(() => {
+        const top = summary.getBoundingClientRect().top;
+        if (top < 110) window.scrollBy({ top: top - 110, behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    });
+    // Aberturas feitas pelo navegador (ex.: busca na página) também fecham as demais
+    item.addEventListener('toggle', () => {
+      if (item.open && !item.animation) items.filter(other => other !== item && other.open).forEach(close);
+    });
+  });
+});
+
 /* ---------- Efeitos de rolagem (fade in / slide) ---------- */
 (() => {
   document.querySelectorAll('[data-reveal-stagger]').forEach(group => {
@@ -141,7 +194,9 @@ document.querySelectorAll('[data-animated-heading]').forEach(heading => {
   pending.forEach(el => observer.observe(el));
 })();
 
-/* ---------- Google Tag Manager (carregado após o load para não pesar no PageSpeed) ---------- */
+/* ---------- Google Tag Manager ----------
+   Carrega no que vier primeiro: primeira interação do visitante (toque, rolagem, tecla) ou logo após o load.
+   Assim não pesa no PageSpeed e fica pronto antes dos cliques nos botões de WhatsApp. */
 function loadGTM(id) {
   if (!/^GTM-[A-Z0-9]+$/.test(id) || window.google_tag_manager) return;
   window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
@@ -151,6 +206,9 @@ function loadGTM(id) {
   document.head.appendChild(script);
 }
 if (CONFIG.gtmId) {
-  const start = () => ('requestIdleCallback' in window ? requestIdleCallback(() => loadGTM(CONFIG.gtmId), { timeout: 2000 }) : setTimeout(() => loadGTM(CONFIG.gtmId), 1));
-  if (document.readyState === 'complete') start(); else window.addEventListener('load', start, { once: true });
+  const interactions = ['pointerdown', 'touchstart', 'keydown', 'scroll', 'mousemove'];
+  const startNow = () => { interactions.forEach(type => window.removeEventListener(type, startNow)); loadGTM(CONFIG.gtmId); };
+  interactions.forEach(type => window.addEventListener(type, startNow, { once: true, passive: true }));
+  const afterLoad = () => ('requestIdleCallback' in window ? requestIdleCallback(startNow, { timeout: 1500 }) : setTimeout(startNow, 1));
+  if (document.readyState === 'complete') afterLoad(); else window.addEventListener('load', afterLoad, { once: true });
 }
