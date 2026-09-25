@@ -46,17 +46,17 @@ AddCharset UTF-8 .html .css .js .txt .xml .json .webmanifest .svg
 
   # Content-Security-Policy
   # Liberado com segurança para: Google Tag Manager (inclui modo preview), Google Analytics 4,
-  # Google Ads (conversão, remarketing, linker), YouTube (embed e miniaturas) e webhook.
+  # Google Ads (conversão, remarketing, linker), YouTube (embed e miniaturas), Microsoft Clarity e webhook.
   # - 'unsafe-inline' em script-src: exigido pelas tags "HTML personalizado" do GTM (site estático, sem nonce).
   # - Se o GTM usar "Variáveis JavaScript personalizadas", acrescente 'unsafe-eval' em script-src.
   # - WEBHOOK: troque/acrescente o domínio do seu webhook em connect-src e form-action
   #   (ex.: https://hook.us1.make.com, https://SEU-N8N.app.n8n.cloud, https://hooks.zapier.com).
   Header always set Content-Security-Policy "default-src 'self'; \
-script-src 'self' 'unsafe-inline' https://*.googletagmanager.com https://tagmanager.google.com https://*.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.youtube.com https://s.ytimg.com; \
+script-src 'self' 'unsafe-inline' https://*.googletagmanager.com https://tagmanager.google.com https://*.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.youtube.com https://s.ytimg.com https://*.clarity.ms https://c.bing.com; \
 style-src 'self' 'unsafe-inline' https://*.googletagmanager.com https://tagmanager.google.com https://fonts.googleapis.com; \
-img-src 'self' data: blob: https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://*.google.com https://*.google.com.br https://www.googleadservices.com https://pagead2.googlesyndication.com https://ssl.gstatic.com https://www.gstatic.com https://i.ytimg.com https://*.ytimg.com; \
+img-src 'self' data: blob: https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://*.google.com https://*.google.com.br https://www.googleadservices.com https://pagead2.googlesyndication.com https://ssl.gstatic.com https://www.gstatic.com https://i.ytimg.com https://*.ytimg.com https://*.clarity.ms https://c.bing.com; \
 font-src 'self' data: https://fonts.gstatic.com; \
-connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://*.google.com https://*.google.com.br https://www.googleadservices.com https://pagead2.googlesyndication.com https://ad.doubleclick.net; \
+connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://*.google.com https://*.google.com.br https://www.googleadservices.com https://pagead2.googlesyndication.com https://ad.doubleclick.net https://*.clarity.ms https://c.bing.com; \
 frame-src 'self' https://*.googletagmanager.com https://td.doubleclick.net https://bid.g.doubleclick.net https://www.youtube.com https://www.youtube-nocookie.com; \
 media-src 'self' blob:; \
 worker-src 'self' blob:; \
