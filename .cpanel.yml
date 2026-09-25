@@ -1,0 +1,8 @@
+---
+deployment:
+  tasks:
+    # Pasta publica (Document Root) do subdominio lp.scootergoiania.com.br.
+    # Ajuste se o Document Root no cPanel for outro caminho.
+    - export DEPLOYPATH=/home2/hg3ads37/public_html/lp.scootergoiania.com.br/
+    - /bin/mkdir -p $DEPLOYPATH
+    - /usr/bin/rsync -av --delete --exclude='.git' --exclude='.cpanel.yml' --exclude='.DS_Store' --exclude='README.md' ./ $DEPLOYPATH
