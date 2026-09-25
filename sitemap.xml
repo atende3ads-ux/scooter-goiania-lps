@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://atende3ads-ux.github.io/scooter-goiania-lps/</loc></url>
-  <url><loc>https://atende3ads-ux.github.io/scooter-goiania-lps/scooters-e-bikes/</loc></url>
-  <url><loc>https://atende3ads-ux.github.io/scooter-goiania-lps/triciclos/</loc></url>
-  <url><loc>https://atende3ads-ux.github.io/scooter-goiania-lps/diversao-eletrica/</loc></url>
-  <url><loc>https://atende3ads-ux.github.io/scooter-goiania-lps/oficina/</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://lp.scootergoiania.com.br/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image><image:loc>https://lp.scootergoiania.com.br/assets/images/og-home.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://lp.scootergoiania.com.br/scooters-e-bikes/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://lp.scootergoiania.com.br/assets/images/og-scooters.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://lp.scootergoiania.com.br/triciclos/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://lp.scootergoiania.com.br/assets/images/og-triciclos.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://lp.scootergoiania.com.br/diversao-eletrica/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://lp.scootergoiania.com.br/assets/images/og-diversao.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://lp.scootergoiania.com.br/oficina/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://lp.scootergoiania.com.br/assets/images/og-oficina.jpg</image:loc></image:image>
+  </url>
 </urlset>

@@ -4,7 +4,8 @@ deployment:
     # Document Root do subdominio lp.scootergoiania.com.br.
     - export DEPLOYPATH=/home2/hg3ads37/lp.scootergoiania.com.br/
     - /bin/mkdir -p $DEPLOYPATH
-    # Protege arquivos do servidor (SSL/AutoSSL, cgi-bin, .htaccess) contra o --delete.
+    # Protege arquivos do servidor (SSL/AutoSSL, cgi-bin, error_log) contra o --delete.
+    # O .htaccess do repositorio e publicado normalmente (substitui o do servidor).
     # --chmod garante permissoes publicas (pastas 755, arquivos 644), sem herdar as do repositorio.
-    - /usr/bin/rsync -rltv --delete --chmod=D755,F644 --exclude='.git' --exclude='.cpanel.yml' --exclude='.DS_Store' --exclude='README.md' --filter='P .well-known/' --filter='P cgi-bin/' --filter='P .htaccess' --filter='P error_log' ./ $DEPLOYPATH
+    - /usr/bin/rsync -rltv --delete --chmod=D755,F644 --exclude='.git' --exclude='.gitignore' --exclude='.cpanel.yml' --exclude='.DS_Store' --exclude='.nojekyll' --exclude='README.md' --exclude='_dev/' --filter='P .well-known/' --filter='P cgi-bin/' --filter='P error_log' ./ $DEPLOYPATH
     - /bin/chmod 755 $DEPLOYPATH

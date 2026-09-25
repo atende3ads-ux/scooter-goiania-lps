@@ -1,0 +1,108 @@
+# =========================================================
+# lp.scootergoiania.com.br — configuração Apache (HostGator/cPanel)
+# =========================================================
+
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .css .js .txt .xml .json .webmanifest .svg
+
+<IfModule mod_mime.c>
+  AddType font/woff2 .woff2
+  AddType image/webp .webp
+  AddType image/svg+xml .svg
+  AddType application/manifest+json .webmanifest
+  AddType text/plain .txt
+</IfModule>
+
+# ---------- Redirecionamentos ----------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Força HTTPS (exceto validação de SSL em /.well-known)
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteCond %{REQUEST_URI} !^/\.well-known/
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # /pasta/index.html -> /pasta/ (URL canônica)
+  RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.html[\s?] [NC]
+  RewriteRule ^(.*/)?index\.html$ /$1 [L,R=301,NE]
+
+  # Bloqueia arquivos ocultos (exceto .well-known) e arquivos de desenvolvimento
+  RewriteRule (^|/)\.(?!well-known/) - [F,L]
+  RewriteRule ^(_dev/|README\.md$) - [F,L]
+</IfModule>
+
+# ---------- Cabeçalhos de segurança + CSP ----------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=()"
+  Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on'"
+
+  # Content-Security-Policy
+  # Liberado com segurança para: Google Tag Manager (inclui modo preview), Google Analytics 4,
+  # Google Ads (conversão, remarketing, linker), YouTube (embed e miniaturas) e webhook.
+  # - 'unsafe-inline' em script-src: exigido pelas tags "HTML personalizado" do GTM (site estático, sem nonce).
+  # - Se o GTM usar "Variáveis JavaScript personalizadas", acrescente 'unsafe-eval' em script-src.
+  # - WEBHOOK: troque/acrescente o domínio do seu webhook em connect-src e form-action
+  #   (ex.: https://hook.us1.make.com, https://SEU-N8N.app.n8n.cloud, https://hooks.zapier.com).
+  Header always set Content-Security-Policy "default-src 'self'; \
+script-src 'self' 'unsafe-inline' https://*.googletagmanager.com https://tagmanager.google.com https://*.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.youtube.com https://s.ytimg.com; \
+style-src 'self' 'unsafe-inline' https://*.googletagmanager.com https://tagmanager.google.com https://fonts.googleapis.com; \
+img-src 'self' data: blob: https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://*.google.com https://*.google.com.br https://www.googleadservices.com https://pagead2.googlesyndication.com https://ssl.gstatic.com https://www.gstatic.com https://i.ytimg.com https://*.ytimg.com; \
+font-src 'self' data: https://fonts.gstatic.com; \
+connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://*.google.com https://*.google.com.br https://www.googleadservices.com https://pagead2.googlesyndication.com https://ad.doubleclick.net; \
+frame-src 'self' https://*.googletagmanager.com https://td.doubleclick.net https://bid.g.doubleclick.net https://www.youtube.com https://www.youtube-nocookie.com; \
+media-src 'self' blob:; \
+worker-src 'self' blob:; \
+manifest-src 'self'; \
+object-src 'none'; \
+base-uri 'self'; \
+form-action 'self'; \
+frame-ancestors 'self'; \
+upgrade-insecure-requests"
+</IfModule>
+
+# ---------- Compressão ----------
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/xml application/xml application/javascript text/javascript application/json application/ld+json application/manifest+json image/svg+xml
+</IfModule>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/xml application/javascript text/javascript application/json application/ld+json application/manifest+json image/svg+xml
+</IfModule>
+
+# ---------- Cache ----------
+# CSS/JS usam ?v=hash (gerado pelo _dev/build.mjs). Ao trocar uma imagem, use um novo nome de arquivo.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 day"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType application/manifest+json "access plus 1 week"
+  ExpiresByType text/plain "access plus 1 day"
+  ExpiresByType application/xml "access plus 1 day"
+  ExpiresByType text/xml "access plus 1 day"
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(webp|png|jpe?g|svg)$">
+    Header set Cache-Control "public, max-age=31536000"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

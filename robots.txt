@@ -1,4 +1,25 @@
+# lp.scootergoiania.com.br
 User-agent: *
 Allow: /
+Disallow: /_dev/
 
-Sitemap: https://atende3ads-ux.github.io/scooter-goiania-lps/sitemap.xml
+# Buscadores e assistentes de IA: acesso liberado para indexar e recomendar as páginas
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Google-Extended
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: meta-externalagent
+User-agent: DuckAssistBot
+Allow: /
+Disallow: /_dev/
+
+Sitemap: https://lp.scootergoiania.com.br/sitemap.xml
